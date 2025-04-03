@@ -16,6 +16,9 @@
     <!-- ico -->
     <link rel="shortcut icon" href="/img/butik.ico" />
 
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
     <!-- Feather Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
 
@@ -38,8 +41,14 @@
   </head>
 
   <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+      <div class="logo-container">
+        <img src="/img/logo.png" alt="Logo" class="logo" />
+      </div>
+    </div>
     <!-- Navbar start -->
-    <nav class="navbar" x-data>
+    <nav id="navbar" class="navbar" x-data>
       <a href="#" class="navbar-logo" style="color: black">LUSTROUS</a>
 
       <div class="navbar-nav">
@@ -422,6 +431,48 @@
     <!-- Feather Icons -->
     <script>
       feather.replace();
+    </script>
+
+    <!-- splashscreen -->
+    <!-- <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(() => {
+          document.getElementById('loading-screen').style.display = 'none';
+          document.getElementById('navbar').style.visibility = 'visible';
+        }, 2000);
+      });
+    </script> -->
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Menunggu splash screen selama 2 detik
+        setTimeout(() => {
+          // Gunakan GSAP untuk animasi transisi
+          gsap.to('#loading-screen', {
+            duration: 1.5, // Durasi animasi fade-out
+            opacity: 0,
+            ease: 'power2.out', // Easing lebih natural
+            onComplete: () => {
+              // Sembunyikan splash screen setelah animasi selesai
+              document.getElementById('loading-screen').style.display = 'none';
+
+              // Tampilkan navbar dengan transisi lebih smooth
+              const navbar = document.getElementById('navbar');
+
+              // Mengubah visibility navbar ke visible terlebih dahulu
+              navbar.style.visibility = 'visible';
+              navbar.style.opacity = 0; // Mulai dari opacity 0
+
+              // Animasi opacity navbar dengan GSAP
+              gsap.to(navbar, {
+                duration: 1,
+                opacity: 1, // Membuat navbar muncul dengan transisi smooth
+                ease: 'power2.out', // Easing yang lebih smooth
+              });
+            },
+          });
+        }, 2000); // Splash screen ditampilkan selama 2 detik
+      });
     </script>
 
     <!-- My Javascript -->
